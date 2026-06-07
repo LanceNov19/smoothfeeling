@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>情绪氛围生成器</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Canvas 粒子层 -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- CSS 渐变遮罩层 -->
+  <div id="gradientOverlay"></div>
+
+  <!-- 音乐播放器 (左上角) -->
+  <div id="musicPlayer">
+    <span id="musicIcon">🎵</span>
+    <span id="musicName">环境音效</span>
+    <button id="playPauseBtn" title="播放/暂停">▶</button>
+<input type="range" id="volumeSlider" min="0" max="100" value="80" title="音量">
+    <span id="musicStatus">♫</span>
+  </div>
+
+  <!-- 时间面板 (右上角) -->
+  <div id="timePanel">
+    <div id="clockDisplay">00:00:00</div>
+    <div id="timerList">
+      <div class="timer-item" data-mood="relax">
+        <span class="timer-emoji">🌿</span>
+        <span class="timer-label">放松</span>
+        <span class="timer-value">00:00:00</span>
+      </div>
+      <div class="timer-item" data-mood="emo">
+        <span class="timer-emoji">🌧️</span>
+        <span class="timer-label">emo</span>
+        <span class="timer-value">00:00:00</span>
+      </div>
+      <div class="timer-item" data-mood="firedUp">
+        <span class="timer-emoji">🔥</span>
+        <span class="timer-label">热血</span>
+        <span class="timer-value">00:00:00</span>
+      </div>
+      <div class="timer-item" data-mood="zoneOut">
+        <span class="timer-emoji">☁️</span>
+        <span class="timer-label">发呆</span>
+        <span class="timer-value">00:00:00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 标语文字 (居中) -->
+  <div id="sloganContainer">
+    <span id="sloganText">深呼吸，让一切慢下来</span>
+    <input type="text" id="sloganInput" maxlength="30" style="display:none;">
+  </div>
+
+  <!-- 氛围切换按钮 (底部居中) -->
+  <div id="moodSelector">
+    <button class="mood-btn active" data-mood="relax">🌿 放松</button>
+    <button class="mood-btn" data-mood="emo">🌧️ emo</button>
+    <button class="mood-btn" data-mood="firedUp">🔥 热血</button>
+    <button class="mood-btn" data-mood="zoneOut">☁️ 发呆</button>
+  </div>
+
+  <!-- 自定义按钮 (右下角) -->
+  <button id="settingsBtn" title="自定义设置">⚙</button>
+
+  <!-- 自定义面板遮罩 -->
+  <div id="panelOverlay" style="display:none;"></div>
+
+  <!-- 自定义面板 (右侧滑出) -->
+  <div id="settingsPanel">
+    <h3>自定义设置</h3>
+    <label>当前氛围: <span id="panelMoodLabel">放松</span></label>
+
+    <label>主色 1:</label>
+    <input type="color" id="panelColor1" value="#a8e6cf">
+
+    <label>主色 2:</label>
+    <input type="color" id="panelColor2" value="#3b8d99">
+
+    <label>标语文字:</label>
+    <input type="text" id="panelSlogan" maxlength="30" value="深呼吸，让一切慢下来">
+
+    <label>音乐来源:</label>
+    <div class="radio-group">
+      <label><input type="radio" name="musicSource" value="default" checked> 默认链接</label>
+      <label><input type="radio" name="musicSource" value="uploaded"> 上传 MP3 文件</label>
+    </div>
+
+    <div id="uploadArea">
+      <input type="file" id="mp3Upload" accept=".mp3,audio/mpeg" style="display:none;">
+      <button id="uploadBtn">📁 选择 MP3 文件</button>
+      <span id="uploadFileName">未选择文件</span>
+      <p class="hint">最大 15MB</p>
+    </div>
+
+    <label>音量: <span id="volumeLabel">80%</span></label>
+    <input type="range" id="panelVolume" min="0" max="100" value="80">
+
+    <label>粒子密度: <span id="densityLabel">40%</span></label>
+    <input type="range" id="panelDensity" min="10" max="100" value="40">
+
+    <div class="panel-actions">
+      <button id="resetDefaultsBtn">恢复默认</button>
+      <button id="closePanelBtn">关闭</button>
+    </div>
+  </div>
+
+  <!-- 提示信息 -->
+  <div id="toast" class="toast-hidden"></div>
+
+  <!-- JS 脚本 (按依赖顺序加载) -->
+  <script src="js/presets.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
